@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Validation</title>
+</head>
+<body>
+  <center>
+    <br/><br/><br/><br/><br/>
+    <h1>Email Validation</h1>
+    <br/>
+    <form action="/validate" method="post">
+	  <label for="userEmail">Validation code sent to:</label>
+      <input type="text" id="userEmail" name="userEmail" value="" readonly>
+	  <br/><br/>
+      <label for="validationCode">Validation Code:</label>
+      <input type="text" id="validationCode" name="validationCode" pattern="[0-9]{12}" title="Please enter a 12-digit validation code" required>
+      <br/><br/>
+      <button type="submit">Confirm</button>
+    </form>
+  </center>
+
+  <script>
+  <!-- popolnuva readonly poleto so mailot na koj praka kod za validacija -->
+    const userEmail = new URLSearchParams(window.location.search).get('email');
+    const userEmailField = document.getElementById('userEmail');
+    userEmailField.value = userEmail;
+    document.getElementById('userEmail').textContent = userEmail;
+  </script>
+</body>
+</html>

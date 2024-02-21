@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+</head>
+<body>
+  <center>
+    <br/><br/><br/><br/><br/>
+    <h1>Admin Page</h1>
+    <p>This page is accessible only to users with admin privileges.</p>
+    <br/>
+    <a href="/main">Back to Main Page</a>
+
+    <!-- del za brisenje users koi imaat 'user' uloga (i admin i owner imaat pristap) -->
+	<br/><br/>
+	<h3>Delete User Account</h3>
+    <form action="/delete-user" method="post" onsubmit="return confirm('Are you sure you want to delete this user account?');">
+  	  <label for="deleteUser">Select user to delete:</label>
+  	  <select name="deleteUser" id="deleteUser">
+  	    <!-- Populate the select options with usernames -->
+  	    <% userData.filter(user => user.role !== "admin" && user.role !== "owner").forEach(user => { %>
+  		  <option value="<%= user.username %>"><%= user.username %></option>
+  	    <% }); %>
+  	  </select>
+  	  <button type="submit">Delete User</button>
+    </form>
+	
+    <!-- del za promocija i degradiranje ulogi (samo dostapno do owner) -->
+    <% if (userRole && userRole === "owner") { %>
+	  <br/></br>
+      <h3>Change User Role</h3>
+      <form action="/change-role" method="post" onsubmit="return confirm('Are you sure you want to promote this user to admin?');">
+        <label for="changeToAdmin">Select user to promote: </label>
+        <select name="changeToAdmin" id="changeToAdmin">
+          <% userData.filter(user => user.role === "user").forEach(user => { %>
+            <option value="<%= user.username %>"><%= user.username %></option>
+          <% }); %>
+        </select>
+        <button type="submit">Promote to Admin</button>
+      </form>
+	  <br/>
+      <form action="/change-role" method="post" onsubmit="return confirm('Are you sure you want to demote this admin to user?');">
+        <label for="changeToUser">Select admin to demote: </label>
+        <select name="changeToUser" id="changeToUser">
+          <% userData.filter(user => user.role === "admin").forEach(user => { %>
+            <option value="<%= user.username %>"><%= user.username %></option>
+          <% }); %>
+        </select>
+        <button type="submit">Demote to User</button>
+      </form>
+    <% } %>
+  </center>
+</body>
+</html>

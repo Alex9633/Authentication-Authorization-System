@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main</title>
+</head>
+<body>
+  <center>
+    <br/><br/><br/><br/><br/>
+    <h1>Welcome <%= user.username %></h1>
+    <h3>blah blah blah</h3>
+    <br/><br/>
+    <a href="/login">Logout</a>
+	<!-- ako user ima uloga admin ili owner ke mu prikaze link do admin page -->
+    <% if (user && (user.role === "admin" || user.role === "owner")) { %>
+	  <br/><br/>
+      <a href="/admin">Admin Page</a>
+    <% } %>
+  </center>
+</body>
+</html>
